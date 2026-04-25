@@ -1,5 +1,11 @@
 # ScriptChain Health: Multi-Source RAG for Technical Support
 
+## What is Nexus Agent?
+**Nexus Agent** is a fictional cloud-based AI customer support widget that developers can embed directly into their own web applications. When developers query the documentation, blogs, or forums in this system, they are typically looking for technical support on issues like:
+* How to embed the React widget into their web app.
+* How to troubleshoot integration errors (like React 18 strict mode crashes).
+* How to configure the AI's internal settings (like lowering the "temperature" to reduce AI hallucinations).
+* How to manage the underlying AWS infrastructure and avoid unexpected cloud billing costs.
 ## Approach & Architecture Overview
 This repository contains a locally executable, Multi-Source RAG system designed to intelligently retrieve, weigh, and synthesize technical support answers for a fictional product ("Nexus Agent"). To ensure privacy, eliminate API latency, and maintain a lightweight footprint, the system relies entirely on local, open-source embedding and reranking models, paired with Llama-3.1-8B-Instruct for final generation.
 
