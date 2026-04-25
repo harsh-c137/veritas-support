@@ -1,0 +1,29 @@
+[
+    {
+        "content": "Nexus Agent Deployment: To deploy the Nexus Agent, you must first configure your AWS infrastructure. Ensure your IAM roles have permissions for SES (Simple Email Service) and Route53 DNS management. The agent requires these to send automated alerts and manage subdomains. Initialize the cloud stack using the `nexus-cli init` command.",
+        "metadata": {
+            "source_type": "doc",
+            "title": "AWS Infrastructure Setup",
+            "author": "Nexus Core Team",
+            "version": "2.1"
+        }
+    },
+    {
+        "content": "Frontend Integration: The Nexus Agent provides a React component library written in TypeScript. To embed the chat widget, install the `@nexus/react-components` package. You must wrap your application in the `<NexusProvider>` and pass your API key as a prop. All components export strict TypeScript interfaces to ensure type safety during development.",
+        "metadata": {
+            "source_type": "doc",
+            "title": "React & TypeScript Integration",
+            "author": "Nexus Frontend Team",
+            "version": "2.1"
+        }
+    },
+    {
+        "content": "Context Retrieval Engine: The core of the Nexus Agent relies on a strict context window. By default, the retrieval engine fetches the top 5 chunks from the vector database. If you experience hallucinations, lower the `temperature` parameter in your config file to 0.1 and ensure your data chunks do not exceed 512 tokens.",
+        "metadata": {
+            "source_type": "doc",
+            "title": "Configuring Context Retrieval",
+            "author": "Nexus AI Team",
+            "version": "2.1"
+        }
+    }
+]

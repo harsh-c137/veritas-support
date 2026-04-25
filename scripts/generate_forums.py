@@ -1,0 +1,47 @@
+import json
+import os
+
+def generate_forums():
+    os.makedirs("../data", exist_ok=True)
+    
+    forums_data = [
+        {
+            "content": "Question: Nexus Agent keeps hallucinating fake API endpoints. Any fixes?\nAnswer: Honestly, I just set the temperature to 0.9 and told it to 'be creative'. It still hallucinates, but at least the responses are funny. Don't use this in production though.",
+            "metadata": {
+                "source_type": "forum",
+                "title": "Agent making up endpoints?",
+                "author": "ChaosCoder",
+                "upvotes": 2,
+                "url": "https://forum.nexus.dev/t/agent-making-up-endpoints"
+            }
+        },
+        {
+            "content": "Question: Getting a Route53 error when running `nexus-cli init`.\nAnswer: Did you check your IAM permissions? The CLI needs full access to Route53 and SES. If you just want to test it locally without AWS, pass the `--local-only` flag. It bypasses the cloud provisioning completely.",
+            "metadata": {
+                "source_type": "forum",
+                "title": "Route53 Error on Init",
+                "author": "CloudNewbie",
+                "upvotes": 45,
+                "url": "https://forum.nexus.dev/t/route53-error-on-init"
+            }
+        },
+        {
+            "content": "Question: React component `<NexusProvider>` is throwing a strict mode error.\nAnswer: Ignore the blog post by Sarah Codes. Memoizing the API key doesn't fix the underlying React 18 strict mode issue. The actual fix is to downgrade to React 17 until the Nexus team patches their context API wrapper.",
+            "metadata": {
+                "source_type": "forum",
+                "title": "React 18 Strict Mode crash",
+                "author": "FrontendGuru",
+                "upvotes": 12,
+                "url": "https://forum.nexus.dev/t/react-18-strict-mode-crash"
+            }
+        }
+    ]
+
+    output_path = "../data/forums.json"
+    with open(output_path, "w") as f:
+        json.dump(forums_data, f, indent=4)
+        
+    print(f"✅ Successfully generated {len(forums_data)} forum chunks at {output_path}")
+
+if __name__ == "__main__":
+    generate_forums()
