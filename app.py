@@ -11,12 +11,17 @@ from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_huggingface import HuggingFaceEmbeddings, HuggingFaceEndpoint, ChatHuggingFace
 from langchain_chroma import Chroma
 from sentence_transformers import CrossEncoder
+from tqdm import tqdm
 
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s  %(levelname)s  %(message)s",
 )
 logger = logging.getLogger(__name__)
+
+# Silence noisy third-party loggers
+for _noisy in ("httpx", "huggingface_hub", "sentence_transformers", "urllib3"):
+    logging.getLogger(_noisy).setLevel(logging.ERROR)
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
 
@@ -136,10 +141,22 @@ def generate_answer(
     return response.content
 
 if __name__ == "__main__":
-    docs = ingest_and_chunk()
-    vs = build_vectorstore(docs)
-    test_query = "How do I fix the React 18 strict mode error?"
-    retrieved = retrieve_and_combine(test_query, vs)
-    reranked = rerank_results(test_query, retrieved, top_k=3)
-    answer = generate_answer(test_query, reranked)
-    print(answer)
+    steps = [
+        ("Loading data",         lambda: ingest_and_chunk()),
+        ("Building vector store", None),
+    ]
+
+    with tqdm(total=3, desc="Initialising", ncols=60, bar_format="{l_bar}{bar}") as bar:
+        docs = ingest_and_chunk()
+        bar.update(1)
+        bar.set_description("Building vector store")
+        vs = build_vectorstore(docs)
+        bar.update(1)
+        bar.set_description("Ready")
+        bar.update(1)
+
+    query = input("\nEnter your question: ").strip()
+    retrieved = retrieve_and_combine(query, vs)
+    reranked = rerank_results(query, retrieved, top_k=3)
+    answer = generate_answer(query, reranked)
+    print(f"\n{answer}")
